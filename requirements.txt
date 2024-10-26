@@ -1,0 +1,8 @@
+torch >= 2.0
+accelerate 
+mido
+jsonlines
+pydub
+tqdm
+einops
+safetensors
