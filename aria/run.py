@@ -264,6 +264,9 @@ def sample(args):
             for _ in range(len(note_tokens)):
                 token_labels[idx_seq].append(form[idx_section])
 
+            assert len(token_labels[idx_seq]) == len(note_tokens), "note tokens len not equal to token labels len"
+            print("start_idx:", start_idx, "seq len:", len(seq), "rm_metadata len:", len(rm_metadata))
+
     samples_dir = os.path.join(os.path.dirname(__file__), "..", "synth_data/samples_0")
     if os.path.isdir(samples_dir) is False:
         os.mkdir(samples_dir)
