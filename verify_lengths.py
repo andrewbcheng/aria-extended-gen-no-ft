@@ -8,7 +8,7 @@ tokens = list(content)
 encoded_tokens = tokenizer.encode(tokens)
 print(len(encoded_tokens))
 
-_midi_dict = MidiDict.from_midi("/project/jonmay_231/spangher/Projects/music-form-structure-modeling/aria-extended-gen-no-ft/synth_data/samples_991/samples_991/1_midi.mid")
+_midi_dict = MidiDict.from_midi("/project/jonmay_231/spangher/Projects/music-form-structure-modeling/aria-extended-gen-no-ft/synth_data/samples_991/1_midi.mid")
 seq = tokenizer.tokenize(_midi_dict)
 pure_seq = []
 for tok in seq:
