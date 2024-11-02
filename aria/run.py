@@ -273,9 +273,7 @@ def sample(args):
             total_tokens_per_var[idx_seq] += len(note_tokens)
     
     for i in range(len(token_labels)):
-        print("var", i, "information:")
-        print("total token label length:", len(token_labels[i]))
-        print("total note token length:", total_tokens_per_var[i])
+        print("var", i, "has total token label length of", len(token_labels[i]), "and total note token length of", total_tokens_per_var[i])
 
     samples_dir = os.path.join(os.path.dirname(__file__), "..", "synth_data/samples_0")
     if os.path.isdir(samples_dir) is False:
