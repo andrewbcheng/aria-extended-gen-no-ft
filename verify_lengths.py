@@ -22,5 +22,5 @@ rm_metadata = seq[start_idx:]
 test_seq = []
 for tok in rm_metadata:
     if tok[0] in ['piano', 'onset', 'dur']:
-        test_seq.extend(tokenizer.encode[tok])
+        test_seq.extend(tokenizer.encode([tok]))
 print(len(test_seq))
