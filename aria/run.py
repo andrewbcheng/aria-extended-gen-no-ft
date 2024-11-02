@@ -229,7 +229,7 @@ def sample(args):
             generated[section] = results # [A1_tokens, ...]
         final_results.append(results) # [[A1_tokens, ...], [B1_tokens, ...], [A1_tokens, ...]]
     
-    total_tokens_per_var = [[0] for _ in range(num_variations)]
+    total_tokens_per_var = [0 for _ in range(num_variations)]
     token_labels = [[] for _ in range(num_variations)] # [[# A1 + # B1 + # A1], ...]
     for idx_section, section in enumerate(final_results): # [A1_tokens, ...]
         if idx_section == 0: # grab original ending ticks
@@ -273,8 +273,9 @@ def sample(args):
             total_tokens_per_var[idx_seq] += len(note_tokens)
     
     for i in range(len(token_labels)):
-        print("var", i, "token label length:", len(token_labels[i]))
-        print("var", i, "note token length:", total_tokens_per_var[i])
+        print("var", i, "information:")
+        print("total token label length:", len(token_labels[i]))
+        print("total note token length:", total_tokens_per_var[i])
 
     samples_dir = os.path.join(os.path.dirname(__file__), "..", "synth_data/samples_0")
     if os.path.isdir(samples_dir) is False:
