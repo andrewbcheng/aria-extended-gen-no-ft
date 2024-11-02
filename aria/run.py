@@ -256,17 +256,22 @@ def sample(args):
                 ending_ticks[idx_seq] = seq.note_msgs[-1]["data"]["end"] + 2000
                 
         # labels
+        # 1. section contains many "seq"s (variations)
+        # 2. token_labels contains many lists [], each of which corresponds to a variation
+        # 3. each token_label list [] contains all tokens of all sections appended together for that variation
+        # 4. therefore for each section (big outer loop), we append the new note_tokens for each seq (each variation) (loop below) to the corresponding token_label list
+        # 5. we also start counting the tokens starting from '<S>', and only count tokens that are 'piano', 'onset', or 'dur' tokens
         for idx_seq, seq in enumerate(section):
             start_idx = seq.index('<S>')
             rm_metadata = seq[start_idx:]
             #note_tokens = [tok for tok in rm_metadata if type(tok) is tuple]
             note_tokens = [tok for tok in rm_metadata if tok[0] in ['piano', 'onset', 'dur']] #count tokens correctly, ignore INST tokens
+            #note_tokens_test = [tok for tok in seq if tok[0] in ['piano', 'onset', 'dur']] #test to see how much is lost if we start from '<S>'
             for _ in range(len(note_tokens)):
                 token_labels[idx_seq].append(form[idx_section])
             
-            print("start_idx:", start_idx, "seq len:", len(seq), "rm_metadata len:", len(rm_metadata))
-            print("note tokens len:", len(note_tokens), "token labels len for idx_seq", idx_seq, ":", len(token_labels[idx_seq]))
-            assert len(token_labels[idx_seq]) == len(note_tokens), "note tokens len not equal to token labels len"
+            #print("seq len:", len(seq), "rm_metadata len:", len(rm_metadata))
+            #print("note tokens len:", len(note_tokens), "note tokens test len:", len(note_tokens_test))
             
 
     samples_dir = os.path.join(os.path.dirname(__file__), "..", "synth_data/samples_0")
