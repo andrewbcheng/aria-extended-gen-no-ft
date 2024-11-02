@@ -1,14 +1,14 @@
 from aria.tokenizer import AbsTokenizer
 from aria.data.midi import MidiDict
 
-with open("/project/jonmay_231/spangher/Projects/music-form-structure-modeling/aria-extended-gen-no-ft/synth_data/samples_991/1_style.txt", 'r') as file:
+with open("/project/jonmay_231/spangher/Projects/music-form-structure-modeling/aria-extended-gen-no-ft/synth_data/samples_0/1_style.txt", 'r') as file:
     content = file.read()
 tokenizer = AbsTokenizer()
 tokens = list(content)
 encoded_tokens = tokenizer.encode(tokens)
 print("file len:", len(encoded_tokens))
 
-_midi_dict = MidiDict.from_midi("/project/jonmay_231/spangher/Projects/music-form-structure-modeling/aria-extended-gen-no-ft/synth_data/samples_991/1_midi.mid")
+_midi_dict = MidiDict.from_midi("/project/jonmay_231/spangher/Projects/music-form-structure-modeling/aria-extended-gen-no-ft/synth_data/samples_0/1_midi.mid")
 seq = tokenizer.tokenize(_midi_dict)
 print("unfiltered seq len:", len(seq))
 pure_seq = []
