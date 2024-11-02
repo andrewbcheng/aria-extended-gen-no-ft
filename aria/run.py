@@ -263,9 +263,11 @@ def sample(args):
             note_tokens = [tok for tok in rm_metadata if tok[0] in ['piano', 'onset', 'dur']] #count tokens correctly, ignore INST tokens
             for _ in range(len(note_tokens)):
                 token_labels[idx_seq].append(form[idx_section])
-
-            assert len(token_labels[idx_seq]) == len(note_tokens), "note tokens len not equal to token labels len"
+            
             print("start_idx:", start_idx, "seq len:", len(seq), "rm_metadata len:", len(rm_metadata))
+            print("note tokens len:", len(note_tokens), "token labels len for idx_seq", idx_seq, ":", len(token_labels[idx_seq]))
+            assert len(token_labels[idx_seq]) == len(note_tokens), "note tokens len not equal to token labels len"
+            
 
     samples_dir = os.path.join(os.path.dirname(__file__), "..", "synth_data/samples_0")
     if os.path.isdir(samples_dir) is False:
