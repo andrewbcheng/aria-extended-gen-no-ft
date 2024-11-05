@@ -243,6 +243,9 @@ def sample(args):
                 res_midi_dict = tokenizer.detokenize(seq) # A1_mididict
                 final_midi_dicts.append(res_midi_dict) # [A1_mididict, ...]
                 ending_ticks[idx_seq] = res_midi_dict.note_msgs[-1]["data"]["end"] + 2000
+
+                for msg in res_midi_dict.note_msgs: # going through every note in the midi dict instead of tokens used to create the midi dict 
+                    token_labels[idx_seq].append(form[idx_section])
         
         else: # modifying current and provide new ending ticks for next iteration
             for idx_seq, seq in enumerate(section):
@@ -255,6 +258,9 @@ def sample(args):
                     adjusted_note_msg["data"]["end"] += ending_ticks[idx_seq]
                     
                     final_midi_dicts[idx_seq].note_msgs.append(adjusted_note_msg) 
+
+                    token_labels[idx_seq].append(form[idx_section]) #add token labels here instead
+                    total_tokens_per_var[idx_seq] += 1
             
             for idx_seq, seq in enumerate(final_midi_dicts): # ending tick of last note of B1_mididict (tick-modified)
                 ending_ticks[idx_seq] = seq.note_msgs[-1]["data"]["end"] + 2000
@@ -265,6 +271,7 @@ def sample(args):
         # 3. each token_label list [] contains all tokens of all sections appended together for that variation
         # 4. therefore for each section (big outer loop), we append the new note_tokens for each seq (each variation) (loop below) to the corresponding token_label list
         # 5. we also start counting the tokens starting from '<S>', and only count tokens that are 'piano', 'onset', or 'dur' tokens
+        '''
         for idx_seq, seq in enumerate(section):
             start_idx = seq.index('<S>')
             rm_metadata = seq[start_idx:]
@@ -274,6 +281,7 @@ def sample(args):
                 token_labels[idx_seq].append(form[idx_section])
             
             total_tokens_per_var[idx_seq] += len(note_tokens)
+        '''
     
     for i in range(len(token_labels)):
         print("var", i, "has total token label length of", len(token_labels[i]), "and total note token length of", total_tokens_per_var[i])
