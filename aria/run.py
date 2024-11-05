@@ -244,8 +244,11 @@ def sample(args):
                 final_midi_dicts.append(res_midi_dict) # [A1_mididict, ...]
                 ending_ticks[idx_seq] = res_midi_dict.note_msgs[-1]["data"]["end"] + 2000
 
-                for msg in res_midi_dict.note_msgs: # going through every note in the midi dict instead of tokens used to create the midi dict 
+                for msg in res_midi_dict.note_msgs: # going through every note in the midi dict instead of tokens used to create the midi dict
                     token_labels[idx_seq].append(form[idx_section])
+                    token_labels[idx_seq].append(form[idx_section])
+                    token_labels[idx_seq].append(form[idx_section])
+                    total_tokens_per_var[idx_seq] += 3
         
         else: # modifying current and provide new ending ticks for next iteration
             for idx_seq, seq in enumerate(section):
@@ -260,7 +263,9 @@ def sample(args):
                     final_midi_dicts[idx_seq].note_msgs.append(adjusted_note_msg) 
 
                     token_labels[idx_seq].append(form[idx_section]) #add token labels here instead
-                    total_tokens_per_var[idx_seq] += 1
+                    token_labels[idx_seq].append(form[idx_section])
+                    token_labels[idx_seq].append(form[idx_section])
+                    total_tokens_per_var[idx_seq] += 3
             
             for idx_seq, seq in enumerate(final_midi_dicts): # ending tick of last note of B1_mididict (tick-modified)
                 ending_ticks[idx_seq] = seq.note_msgs[-1]["data"]["end"] + 2000
