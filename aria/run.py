@@ -6,6 +6,9 @@ import re
 import sys
 import copy
 
+from aria.tokenizer import AbsTokenizer
+from aria.data.midi import MidiDict
+
 
 def _parse_sample_args():
     argp = argparse.ArgumentParser(prog="aria sample")
@@ -285,19 +288,23 @@ def sample(args):
             samples_dir = os.path.join(os.path.dirname(__file__), "..", "synth_data/samples_") + str(sample_num)
         os.mkdir(samples_dir)
             
-    for idx, token_label in enumerate(token_labels): # [A1 + # B1 + # A1] 
-        if len(token_labels[idx]) == total_tokens_per_var[idx]: #only write this variation to files if token label len == number of note tokens
-            output_file = os.path.join(samples_dir, f"{idx + 1}_style.txt")
-            with open(output_file, 'w') as file:
-                for tok in token_label:
-                    file.write(tok)
+    #for idx, token_label in enumerate(token_labels): # [A1 + # B1 + # A1] 
+    #    if len(token_labels[idx]) == total_tokens_per_var[idx]: #only write this variation to files if token label len == number of note tokens
+    #        output_file = os.path.join(samples_dir, f"{idx + 1}_style.txt")
+    #        with open(output_file, 'w') as file:
+    #            for tok in token_label:
+    #                file.write(tok)
             
-    print(f"Labels saved to {samples_dir}")
+    #print(f"Labels saved to {samples_dir}")
 
     for idx, combined_midi_dict in enumerate(final_midi_dicts):
         if len(token_labels[idx]) == total_tokens_per_var[idx]: #only write this variation to files if token label len == number of note tokens
             res_midi = combined_midi_dict.to_midi()
             res_midi.save(f"{samples_dir}/{idx + 1}_midi.mid")
+            output_file = os.path.join(samples_dir, f"{idx + 1}_style.txt")
+            with open(output_file, 'w') as file:
+                for tok in token_labels[idx]:
+                    file.write(tok)
 
     print(f"Results saved to {samples_dir}")
 
