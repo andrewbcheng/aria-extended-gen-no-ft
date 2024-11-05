@@ -306,13 +306,13 @@ def sample(args):
     #print(f"Labels saved to {samples_dir}")
 
     for idx, combined_midi_dict in enumerate(final_midi_dicts):
-        if len(token_labels[idx]) == total_tokens_per_var[idx]: #only write this variation to files if token label len == number of note tokens
-            res_midi = combined_midi_dict.to_midi()
-            res_midi.save(f"{samples_dir}/{idx + 1}_midi.mid")
-            output_file = os.path.join(samples_dir, f"{idx + 1}_style.txt")
-            with open(output_file, 'w') as file:
-                for tok in token_labels[idx]:
-                    file.write(tok)
+        #if len(token_labels[idx]) == total_tokens_per_var[idx]: #only write this variation to files if token label len == number of note tokens
+        res_midi = combined_midi_dict.to_midi()
+        res_midi.save(f"{samples_dir}/{idx + 1}_midi.mid")
+        output_file = os.path.join(samples_dir, f"{idx + 1}_style.txt")
+        with open(output_file, 'w') as file:
+            for tok in token_labels[idx]:
+                file.write(tok)
 
     print(f"Results saved to {samples_dir}")
 
